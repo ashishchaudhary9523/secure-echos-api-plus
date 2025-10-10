@@ -118,6 +118,9 @@ public class AuthController {
         if (customer.isVerified()) {
             return new ResponseEntity<>("Your email is already verified!", HttpStatus.BAD_REQUEST);
         }
+        if (customer.getTokenExpiry().isAfter(LocalDateTime.now())) {
+            return new ResponseEntity<>("You can only resend verification email once every 24h", HttpStatus.BAD_REQUEST);
+        }
 
         // Generate a new token & expiry
         String token = UUID.randomUUID().toString();
