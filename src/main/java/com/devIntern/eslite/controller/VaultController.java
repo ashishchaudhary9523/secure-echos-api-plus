@@ -22,10 +22,10 @@ public class VaultController {
         this.vaultService = vaultService;
     }
 
-    @PostMapping("/store-data")
+    @PostMapping("/create-vault")
     public ResponseEntity<?> storeData(@Valid @RequestBody VaultDTO vaultDTO){
         try {
-            String response = vaultService.storeVault(vaultDTO);
+            String response = vaultService.createVault(vaultDTO);
             return new ResponseEntity<>(response , HttpStatus.OK);
         } catch (Exception e) {
            return new ResponseEntity<>( "Failed to store data" , HttpStatus.BAD_REQUEST);
@@ -36,7 +36,7 @@ public class VaultController {
     public ResponseEntity<?> getVault(@Valid @RequestBody AccessDTO accessDTO){
         String response = null;
         try {
-            response = vaultService.getVault(accessDTO.getUserName() , accessDTO.getKey());
+            response = vaultService.getVault(accessDTO);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST);
         }
@@ -51,6 +51,16 @@ public class VaultController {
             return new ResponseEntity<>(response , HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>( "Failed to store data" , HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/delete-vault")
+    public ResponseEntity<?> deleteVault(@Valid @RequestBody AccessDTO accessDTO){
+        try {
+            vaultService.deleteVault(accessDTO);
+            return new ResponseEntity<>("Successfully deleted the vault", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage() , HttpStatus.BAD_REQUEST);
         }
     }
 

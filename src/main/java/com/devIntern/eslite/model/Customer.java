@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -13,6 +15,7 @@ public class Customer {
 
     private String name;
     @Id
+    @Column(unique = true , nullable = false)
     private String userName;
     @Column(unique = true , nullable = false)
     private String email;
@@ -27,7 +30,7 @@ public class Customer {
     private LocalDateTime tokenExpiry;
 
 
-    @OneToOne(mappedBy = "customer" , cascade = CascadeType.ALL , orphanRemoval = true)
-    private Vault vault;
+    @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Vault> vault = new ArrayList<>();
 
 }

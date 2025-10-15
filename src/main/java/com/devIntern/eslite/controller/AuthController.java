@@ -79,10 +79,10 @@ public class AuthController {
         customer.setVerificationToken(token);
         customer.setTokenExpiry(LocalDateTime.now().plusHours(24)); // 24h validity
 
-        Vault vault = new Vault();
-        vault.setCustomer(customer);
-        vault.setEncryptedData("this is the dummy data");
-        customer.setVault(vault);
+//        Vault vault = new Vault();
+//        vault.setCustomer(customer);
+//        vault.setEncryptedData("this is the dummy data");
+//        customer.setVault(vault);
 
         customerRepository.save(customer);
 

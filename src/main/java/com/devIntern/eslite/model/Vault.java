@@ -9,7 +9,10 @@ import lombok.Data;
 public class Vault {
 
     @Id()
-    private String userName;
+    @Column(unique = true , nullable = false)
+    private String vaultId;
+
+//    private String userName;
 
     @Lob
     private String encryptedData;
@@ -17,8 +20,7 @@ public class Vault {
     private String key;
     private Boolean isUpdated = false;
 
-    @OneToOne
-    @MapsId
+    @ManyToOne
     @JoinColumn(name = "user_name")
     private Customer customer;
 }

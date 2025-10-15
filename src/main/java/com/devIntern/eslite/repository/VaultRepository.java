@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface VaultRepository extends JpaRepository<Vault, String> {
-        void deleteByUserName(String userName);
-        Vault findByUserName(String userName);
+    Vault findByVaultId(String vaultId);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Vault v WHERE v.vaultId = :vaultId")
+    void deleteByVaultId(@Param("vaultId") String vaultId);
 
 }
